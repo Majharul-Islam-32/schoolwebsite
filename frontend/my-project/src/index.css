@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Disable text selection on UI elements */
+nav,
+nav *,
+button,
+button *,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar,
+.navbar * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Allow selection for content text */
+p,
+article p,
+.content p,
+li,
+td,
+th {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}

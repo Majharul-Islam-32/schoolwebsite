@@ -1,0 +1,159 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { ArrowLeft, Save } from 'lucide-react';
+import RichTextEditor from '../../../components/admin/RichTextEditor';
+import ImageUpload from '../../../components/admin/ImageUpload';
+import { eventService } from '../../../services/eventService';
+
+const EventCreate = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [description, setDescription] = useState('');
+  const [thumbnail, setThumbnail] = useState([]);
+  const [galleryImages, setGalleryImages] = useState([]);
+
+  const onSubmit = async (data) => {
+    try {
+      // For now, we'll just use the file name as the URL since we don't have a file upload endpoint yet
+      const thumbnailFile = thumbnail[0]?.file;
+      const galleryFiles = galleryImages.map(img => img.file);
+
+      const eventData = {
+        ...data,
+        description,
+        thumbnailUrl: thumbnailFile ? URL.createObjectURL(thumbnailFile) : '', // Temporary: use object URL for local preview or file name
+        // In a real app, you would upload the file first, get the URL, and send that.
+        // For this demo, we'll send a placeholder or the object URL if it's short enough (it's not).
+        // Let's just send a dummy URL for now to satisfy the backend.
+        thumbnailUrl: 'https://placehold.co/600x400', 
+        videoUrl: data.videoUrl || '',
+      };
+      
+      await eventService.create(eventData);
+      alert('Event created successfully!');
+      navigate('/admin/events');
+    } catch (error) {
+      console.error('Error creating event:', error);
+      alert('Failed to create event');
+    }
+  };
+
+  return (
+    <div>
+      {/* Header */}
+      <div className="flex items-center mb-6">
+        <button
+          onClick={() => navigate('/admin/events')}
+          className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <ArrowLeft size={24} />
+        </button>
+        <h1 className="text-3xl font-bold text-gray-800">Create Event</h1>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-sm p-6">
+        <div className="space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Event Title <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              {...register('title', { required: 'Title is required' })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter event title"
+            />
+            {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Description <span className="text-red-500">*</span>
+            </label>
+            <RichTextEditor value={description} onChange={setDescription} />
+            {!description && <p className="text-red-500 text-sm mt-1">Description is required</p>}
+          </div>
+
+          {/* Event Date */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Event Date <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="date"
+              {...register('eventDate', { required: 'Event date is required' })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            {errors.eventDate && <p className="text-red-500 text-sm mt-1">{errors.eventDate.message}</p>}
+          </div>
+
+          {/* Thumbnail Image */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Thumbnail Image <span className="text-red-500">*</span>
+            </label>
+            <ImageUpload
+              images={thumbnail}
+              onChange={setThumbnail}
+              multiple={false}
+            />
+            {thumbnail.length === 0 && <p className="text-red-500 text-sm mt-1">Thumbnail is required</p>}
+          </div>
+
+          {/* Gallery Images */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Gallery Images (Optional)
+            </label>
+            <ImageUpload
+              images={galleryImages}
+              onChange={setGalleryImages}
+              multiple={true}
+              maxFiles={10}
+            />
+            <p className="text-sm text-gray-500 mt-2">Upload up to 10 images for the event gallery</p>
+          </div>
+
+          {/* Video URL */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Video URL (Optional)
+            </label>
+            <input
+              type="url"
+              {...register('videoUrl')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="https://youtube.com/watch?v=..."
+            />
+            <p className="text-sm text-gray-500 mt-1">YouTube or other video platform URL</p>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+            <button
+              type="button"
+              onClick={() => navigate('/admin/events')}
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!description || thumbnail.length === 0}
+              className="flex items-center space-x-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Save size={18} />
+              <span>Create Event</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default EventCreate;
