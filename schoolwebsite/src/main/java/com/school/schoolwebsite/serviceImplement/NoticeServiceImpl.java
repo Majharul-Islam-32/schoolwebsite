@@ -8,6 +8,7 @@ import com.school.schoolwebsite.entity.Notice;
 import com.school.schoolwebsite.entity.TickerSettings;
 import com.school.schoolwebsite.entity.User;
 import com.school.schoolwebsite.enums.NoticeCategory;
+import com.school.schoolwebsite.mapper.NoticeMapper;
 import com.school.schoolwebsite.repository.NoticeRepository;
 import com.school.schoolwebsite.repository.TickerSettingsRepository;
 import com.school.schoolwebsite.repository.UserRepository;
@@ -25,12 +26,14 @@ public class NoticeServiceImpl implements NoticeService {
   private final NoticeRepository noticeRepository;
   private final UserRepository userRepository;
   private final TickerSettingsRepository tickerSettingsRepository;
+  private final NoticeMapper noticeMapper;
 
   public NoticeServiceImpl(NoticeRepository noticeRepository, UserRepository userRepository,
-      TickerSettingsRepository tickerSettingsRepository) {
+      TickerSettingsRepository tickerSettingsRepository, NoticeMapper noticeMapper) {
     this.noticeRepository = noticeRepository;
     this.userRepository = userRepository;
     this.tickerSettingsRepository = tickerSettingsRepository;
+    this.noticeMapper = noticeMapper;
   }
 
   @Override
@@ -50,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
     notice.setShowInTicker(request.getShowInTicker() != null ? request.getShowInTicker() : false);
 
     Notice savedNotice = noticeRepository.save(notice);
-    return mapToResponse(savedNotice);
+    return noticeMapper.mapToResponse(savedNotice);
   }
 
   @Override
@@ -68,7 +71,7 @@ public class NoticeServiceImpl implements NoticeService {
     notice.setShowInTicker(request.getShowInTicker() != null ? request.getShowInTicker() : false);
 
     Notice updatedNotice = noticeRepository.save(notice);
-    return mapToResponse(updatedNotice);
+    return noticeMapper.mapToResponse(updatedNotice);
   }
 
   @Override
@@ -84,14 +87,14 @@ public class NoticeServiceImpl implements NoticeService {
   public NoticeResponse getNoticeById(Long id) {
     Notice notice = noticeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Notice not found"));
-    return mapToResponse(notice);
+    return noticeMapper.mapToResponse(notice);
   }
 
   @Override
   public List<NoticeResponse> getAllNotices() {
     return noticeRepository.findAllByOrderByPublishDateDesc()
         .stream()
-        .map(this::mapToResponse)
+        .map(noticeMapper::mapToResponse)
         .collect(Collectors.toList());
   }
 
@@ -99,7 +102,7 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeResponse> getNoticesByCategory(NoticeCategory category) {
     return noticeRepository.findByCategory(category)
         .stream()
-        .map(this::mapToResponse)
+        .map(noticeMapper::mapToResponse)
         .collect(Collectors.toList());
   }
 
@@ -107,24 +110,8 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeResponse> getUrgentNotices() {
     return noticeRepository.findByIsUrgentTrue()
         .stream()
-        .map(this::mapToResponse)
+        .map(noticeMapper::mapToResponse)
         .collect(Collectors.toList());
-  }
-
-  private NoticeResponse mapToResponse(Notice notice) {
-    NoticeResponse response = new NoticeResponse();
-    response.setId(notice.getId());
-    response.setTitle(notice.getTitle());
-    response.setDescription(notice.getDescription());
-    response.setCategory(notice.getCategory());
-    response.setPublishDate(notice.getPublishDate());
-    response.setIsUrgent(notice.getIsUrgent());
-    response.setCreatedBy(notice.getCreatedBy() != null ? notice.getCreatedBy().getUsername() : null);
-    response.setCreatedAt(notice.getCreatedAt());
-    response.setUpdatedAt(notice.getUpdatedAt());
-    response.setAttachmentUrl(notice.getAttachmentUrl());
-    response.setShowInTicker(notice.getShowInTicker());
-    return response;
   }
 
   // Ticker-related methods
@@ -139,7 +126,7 @@ public class NoticeServiceImpl implements NoticeService {
     PageRequest pageRequest = PageRequest.of(0, settings.getMaxItems());
     return noticeRepository.findByShowInTickerTrueOrderByPublishDateDesc(pageRequest)
         .stream()
-        .map(this::mapToResponse)
+        .map(noticeMapper::mapToResponse)
         .collect(Collectors.toList());
   }
 

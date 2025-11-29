@@ -36,7 +36,7 @@ const Login = () => {
             <Lock size={40} className="text-blue-600" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Admin Panel</h1>
-          <p className="text-blue-100">Village Government Primary School</p>
+          <p className="text-blue-100">Abdullapur Bazar Government Primary School</p>
         </div>
 
         {/* Login Form */}

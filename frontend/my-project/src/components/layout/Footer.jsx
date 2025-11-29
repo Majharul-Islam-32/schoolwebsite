@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-6">
               <img src="/logo.png" alt="Logo" className="h-12 w-12 rounded-full bg-white p-1" />
               <div>
-                <h3 className="text-xl font-bold leading-tight">Village Government<br/>Primary School</h3>
+                <h3 className="text-xl font-bold leading-tight">Abdullapur Bazar Government<br/>Primary School</h3>
               </div>
             </div>
             <p className="text-blue-200 text-sm leading-relaxed mb-6">
@@ -113,7 +113,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-3 text-blue-400 flex-shrink-0" />
-                <span className="text-blue-200 text-sm">info@villagegps.edu.bd</span>
+                <span className="text-blue-200 text-sm">info@abgps.edu.bd</span>
               </li>
             </ul>
           </div>
@@ -122,7 +122,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-blue-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-300">
-          <p>&copy; {new Date().getFullYear()} Village Government Primary School. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Abdullapur Bazar Government Primary School. All rights reserved.</p>
           <p className="mt-2 md:mt-0">
             Developed by <span className="text-white font-medium">Your Name/Company</span>
           </p>

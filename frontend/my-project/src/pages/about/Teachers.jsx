@@ -1,18 +1,35 @@
-import React from 'react';
-import { User, Phone, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, Phone, Mail, Loader2 } from 'lucide-react';
 
 const Teachers = () => {
-  // Dummy data for teachers
-  const teachers = [
-    { id: 1, name: "Md. Abdul Karim", designation: "Headmaster", phone: "01711-XXXXXX", email: "headmaster@school.com" },
-    { id: 2, name: "Mrs. Salma Begum", designation: "Assistant Teacher", phone: "01819-XXXXXX", email: "salma@school.com" },
-    { id: 3, name: "Mr. Rahim Uddin", designation: "Assistant Teacher", phone: "01912-XXXXXX", email: "rahim@school.com" },
-    { id: 4, name: "Mrs. Fatema Khatun", designation: "Assistant Teacher", phone: "01712-XXXXXX", email: "fatema@school.com" },
-    { id: 5, name: "Mr. Kamal Hossain", designation: "Assistant Teacher", phone: "01611-XXXXXX", email: "kamal@school.com" },
-    { id: 6, name: "Mrs. Nasrin Akter", designation: "Assistant Teacher", phone: "01515-XXXXXX", email: "nasrin@school.com" },
-    { id: 7, name: "Mr. Jamal Uddin", designation: "Assistant Teacher", phone: "01715-XXXXXX", email: "jamal@school.com" },
-    { id: 8, name: "Mrs. Rina Parvin", designation: "Assistant Teacher", phone: "01818-XXXXXX", email: "rina@school.com" },
-  ];
+  const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/teachers?activeOnly=true');
+        if (response.ok) {
+          const data = await response.json();
+          setTeachers(data);
+        }
+      } catch (error) {
+        console.error('Error fetching teachers:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeachers();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-gray-50">
+        <Loader2 className="animate-spin text-blue-600" size={48} />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen py-12">
@@ -24,41 +41,52 @@ const Teachers = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {teachers.map((teacher) => (
-            <div key={teacher.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100 group">
-              {/* Image Placeholder Section */}
-              <div className="bg-blue-50 h-48 flex items-center justify-center relative overflow-hidden">
-                {/* 
-                  TODO: Replace the icon below with an actual image tag when images are available.
-                  Example: <img src="/path/to/image.jpg" alt={teacher.name} className="w-full h-full object-cover" />
-                */}
-                <User size={64} className="text-blue-300 group-hover:scale-110 transition-transform duration-300" />
-                
-                {/* Overlay for Blueprint */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 font-medium text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
-                    View Profile
-                  </span>
+        {teachers.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-500 text-lg">No teacher information available at the moment.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {teachers.map((teacher) => (
+              <div key={teacher.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100 group">
+                {/* Image Section */}
+                <div className="bg-blue-50 h-64 flex items-center justify-center relative overflow-hidden">
+                  {teacher.imageUrl ? (
+                    <img 
+                      src={teacher.imageUrl} 
+                      alt={teacher.name} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    />
+                  ) : (
+                    <User size={64} className="text-blue-300 group-hover:scale-110 transition-transform duration-300" />
+                  )}
+                  
+                  {/* Overlay removed to fix black image issue */}
                 </div>
-              </div>
 
-              <div className="p-6 text-center">
-                <h3 className="text-lg font-bold text-gray-800 mb-1">{teacher.name}</h3>
-                <p className="text-blue-600 font-medium text-sm mb-4">{teacher.designation}</p>
-                
-                <div className="flex justify-center space-x-4 text-gray-500">
-                  <a href={`tel:${teacher.phone}`} className="hover:text-blue-600 transition-colors" title="Call">
-                    <Phone size={18} />
-                  </a>
-                  <a href={`mailto:${teacher.email}`} className="hover:text-blue-600 transition-colors" title="Email">
-                    <Mail size={18} />
-                  </a>
+                <div className="p-6 text-center">
+                  <h3 className="text-lg font-bold text-gray-800 mb-1">{teacher.name}</h3>
+                  <p className="text-blue-600 font-medium text-sm mb-4">{teacher.designation}</p>
+                  
+                  <div className="flex flex-col items-center gap-2 text-gray-500 text-sm">
+                    {teacher.phone && (
+                      <a href={`tel:${teacher.phone}`} className="flex items-center gap-2 hover:text-blue-600 transition-colors">
+                        <Phone size={16} />
+                        <span>{teacher.phone}</span>
+                      </a>
+                    )}
+                    {teacher.email && (
+                      <a href={`mailto:${teacher.email}`} className="flex items-center gap-2 hover:text-blue-600 transition-colors">
+                        <Mail size={16} />
+                        <span>{teacher.email}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

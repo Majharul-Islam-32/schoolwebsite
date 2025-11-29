@@ -38,20 +38,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
 
-    jwt = authHeader.substring(7);
-    username = jwtTokenProvider.extractUsername(jwt);
+    try {
+      jwt = authHeader.substring(7);
+      username = jwtTokenProvider.extractUsername(jwt);
 
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-      if (jwtTokenProvider.validateToken(jwt, userDetails)) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            userDetails,
-            null,
-            userDetails.getAuthorities());
-        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (jwtTokenProvider.validateToken(jwt, userDetails)) {
+          UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+              userDetails,
+              null,
+              userDetails.getAuthorities());
+          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authToken);
+        }
       }
+    } catch (Exception e) {
+      // Token is invalid or expired. Proceed without authentication.
+      // If the endpoint requires auth, Spring Security will handle the 403.
     }
     filterChain.doFilter(request, response);
   }

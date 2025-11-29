@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
-  Bell, 
-  Calendar, 
-  Users, 
-  Settings,
+  Settings, 
+  LogOut,
+  FileText,
+  Users,
+  Bell,
+  Calendar,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { useTranslation } from '../../hooks/useTranslation';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const menuItems = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Notices', path: '/admin/notices', icon: Bell },
-    { name: 'Events', path: '/admin/events', icon: Calendar },
-    { name: 'Teachers', path: '/admin/teachers', icon: Users },
-    { name: 'Ticker Settings', path: '/admin/settings/ticker', icon: Settings },
+    { name: t('dashboard'), path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: t('notices'), path: '/admin/notices', icon: Bell },
+    { name: t('events'), path: '/admin/events', icon: Calendar },
+    { name: t('managePages'), path: '/admin/pages', icon: FileText },
+    { name: t('manageTeachers'), path: '/admin/teachers', icon: Users },
+    { name: t('manageCommittee'), path: '/admin/committee', icon: Users },
+    { name: t('tickerSettings'), path: '/admin/settings/ticker', icon: Settings },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -27,7 +33,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     <div className={`bg-slate-800 text-white h-screen fixed left-0 top-0 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} flex flex-col`}>
       {/* Logo */}
       <div className="p-4 border-b border-slate-700 flex items-center justify-between">
-        {!isCollapsed && <h1 className="text-xl font-bold">Admin Panel</h1>}
+        {!isCollapsed && <h1 className="text-xl font-bold">{t('adminPanel')}</h1>}
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="p-2 hover:bg-slate-700 rounded-lg transition-colors"

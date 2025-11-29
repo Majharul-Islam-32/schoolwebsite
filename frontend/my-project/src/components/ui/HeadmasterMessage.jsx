@@ -34,7 +34,7 @@ const HeadmasterMessage = () => {
               <Quote className="absolute -top-4 -left-2 text-blue-100 w-16 h-16 -z-10" />
               <p className="text-gray-600 leading-relaxed mb-6 text-lg">
                 "Education is the most powerful weapon which you can use to change the world. 
-                At Village Government Primary School, we are committed to providing a nurturing 
+                At Abdullapur Bazar Government Primary School, we are committed to providing a nurturing 
                 and inclusive environment where every child can thrive. Our dedicated teachers 
                 work tirelessly to ensure that our students not only excel academically but also 
                 grow into responsible and compassionate citizens. We believe in the holistic 
@@ -44,7 +44,7 @@ const HeadmasterMessage = () => {
             </div>
 
             <div className="mt-8">
-              <h4 className="text-xl font-bold text-gray-800">Md. Abdul Karim</h4>
+              <h4 className="text-xl font-bold text-gray-800">Md. Rafiqul Islam</h4>
               <p className="text-blue-600 font-medium">Head Teacher</p>
             </div>
           </div>

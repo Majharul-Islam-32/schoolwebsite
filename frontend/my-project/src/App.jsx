@@ -2,9 +2,13 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router/router';
 import './App.css';
 
+import { LanguageProvider } from './context/LanguageContext';
+
 function App() {
   return (
-    <RouterProvider router={router} />
+    <LanguageProvider>
+      <RouterProvider router={router} />
+    </LanguageProvider>
   );
 }
 

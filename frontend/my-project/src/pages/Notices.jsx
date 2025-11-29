@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, ArrowRight, Bell, X, FileText, Image as ImageIcon } from 'lucide-react';
 import NoticeTicker from '../components/ui/NoticeTicker';
 import FadeInSection from '../components/ui/FadeInSection';
+import PdfPreviewModal from '../components/ui/PdfPreviewModal';
 import { noticeService } from '../services/noticeService';
 
 const Notices = () => {
@@ -9,6 +10,8 @@ const Notices = () => {
   const [allNotices, setAllNotices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [previewFile, setPreviewFile] = useState(null);
+  const [previewType, setPreviewType] = useState(null); // 'image' or 'pdf'
+  const [previewTitle, setPreviewTitle] = useState('');
 
   React.useEffect(() => {
     const fetchNotices = async () => {
@@ -38,19 +41,23 @@ const Notices = () => {
     { value: 'general', label: 'General' }
   ];
 
-  const openPreview = (attachmentUrl) => {
+  const openPreview = (attachmentUrl, title) => {
     const fullUrl = attachmentUrl.startsWith('http') ? attachmentUrl : `http://localhost:8080/uploads/${attachmentUrl}`;
+    setPreviewTitle(title);
     
-    // For PDFs, open in new tab instead of modal
     if (isPDF(attachmentUrl)) {
-      window.open(fullUrl, '_blank');
+      setPreviewType('pdf');
+      setPreviewFile(fullUrl);
     } else {
+      setPreviewType('image');
       setPreviewFile(fullUrl);
     }
   };
 
   const closePreview = () => {
     setPreviewFile(null);
+    setPreviewType(null);
+    setPreviewTitle('');
   };
 
   const isImage = (url) => {
@@ -126,7 +133,7 @@ const Notices = () => {
                   
                   {notice.attachmentUrl && (
                     <button
-                      onClick={() => openPreview(notice.attachmentUrl)}
+                      onClick={() => openPreview(notice.attachmentUrl, notice.title)}
                       className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                     >
                       {isImage(notice.attachmentUrl) ? (
@@ -152,26 +159,36 @@ const Notices = () => {
       </div>
       )}
 
-      {/* Preview Modal - Only for Images */}
+      {/* Preview Modal */}
       {previewFile && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" onClick={closePreview}>
-          <div className="relative max-w-6xl max-h-[90vh] w-full bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={closePreview}
-              className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
-            >
-              <X size={24} />
-            </button>
-            
-            <div className="w-full h-full overflow-auto">
-              <img 
-                src={previewFile} 
-                alt="Preview" 
-                className="w-full h-auto"
-              />
+        <>
+          {previewType === 'pdf' ? (
+            <PdfPreviewModal 
+              pdfUrl={previewFile} 
+              title={previewTitle} 
+              onClose={closePreview} 
+            />
+          ) : (
+            <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" onClick={closePreview}>
+              <div className="relative max-w-6xl max-h-[90vh] w-full bg-white rounded-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                <button
+                  onClick={closePreview}
+                  className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+                
+                <div className="w-full h-full overflow-auto flex justify-center bg-gray-100">
+                  <img 
+                    src={previewFile} 
+                    alt="Preview" 
+                    className="max-w-full max-h-[85vh] object-contain"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </div>
   );

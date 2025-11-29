@@ -7,14 +7,14 @@ const QuickStats = () => {
     {
       id: 1,
       label: "Total Students",
-      value: 450,
+      value: 400,
       icon: <Users size={40} />,
       color: "bg-blue-100 text-blue-600"
     },
     {
       id: 2,
-      label: "Expert Teachers",
-      value: 12,
+      label: "Teachers",
+      value: 6,
       icon: <UserCheck size={40} />,
       color: "bg-green-100 text-green-600"
     },
@@ -28,7 +28,7 @@ const QuickStats = () => {
     {
       id: 4,
       label: "Years of Excellence",
-      value: 35,
+      value: 48,
       icon: <BookOpen size={40} />,
       color: "bg-purple-100 text-purple-600"
     }
@@ -51,7 +51,7 @@ const QuickStats = () => {
               </div>
               <h3 className="text-4xl font-bold mb-2">
                 <CountUp end={stat.value} duration={2.5} enableScrollSpy />
-                {stat.label.includes("Years") || stat.label.includes("Achievers") ? "+" : ""}
+                {stat.label.includes("Years") || stat.label.includes("Students") || stat.label.includes("Achievers") ? "+" : ""}
               </h3>
               <p className="text-blue-100 font-medium text-lg">{stat.label}</p>
             </div>

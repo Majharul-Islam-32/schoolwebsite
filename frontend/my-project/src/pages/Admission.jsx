@@ -10,7 +10,7 @@ const Admission = () => {
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Admission Information</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Welcome to the admission process for Village Government Primary School. 
+            Welcome to the admission process for Abdullapur Bazar Government Primary School. 
             Please read the information carefully before applying.
           </p>
         </div>

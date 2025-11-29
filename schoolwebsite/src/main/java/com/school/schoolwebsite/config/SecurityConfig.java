@@ -3,6 +3,7 @@ package com.school.schoolwebsite.config;
 import com.school.schoolwebsite.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,6 +38,9 @@ public class SecurityConfig {
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers("/api/notices/**").permitAll()
             .requestMatchers("/api/events/**").permitAll()
+            .requestMatchers("/api/pages/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/teachers/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/committee-members/**").permitAll()
             .requestMatchers("/uploads/**").permitAll()
             .requestMatchers("/api/upload").authenticated()
             .anyRequest().authenticated())

@@ -17,7 +17,7 @@ const History = () => {
                 <Clock className="mr-3 text-blue-600" /> Founding Story
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Village Government Primary School was established in 1990 with a vision to provide quality primary education to the children of our village. Starting with just 2 classrooms and 50 students, the school was founded by a group of dedicated community leaders who believed that education is the key to development.
+                Abdullapur Bazar Government Primary School was established in 1990 with a vision to provide quality primary education to the children of our village. Starting with just 2 classrooms and 50 students, the school was founded by a group of dedicated community leaders who believed that education is the key to development.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 The land for the school was generously donated by Late Haji Abdul Malek, a respected philanthropist of the area. His dream was to see every child in the village holding a book and smiling with the joy of learning.
