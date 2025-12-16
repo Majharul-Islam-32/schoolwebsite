@@ -17,7 +17,8 @@ const NoticeBoard = () => {
       try {
         const data = await noticeService.getAll();
         // Take top 4 for a balanced grid layout
-        const latestNotices = data.slice(0, 4);
+        const noticesArray = Array.isArray(data) ? data : [];
+        const latestNotices = noticesArray.slice(0, 4);
         setNotices(latestNotices);
       } catch (error) {
         console.error('Failed to fetch notices:', error);
@@ -47,9 +48,9 @@ const NoticeBoard = () => {
         if (!attachmentUrl.startsWith('http')) {
             // If it starts with /, just prepend base URL, otherwise prepend /uploads/
             if (attachmentUrl.startsWith('/')) {
-                fullUrl = `http://localhost:5002${attachmentUrl}`;
+                fullUrl = `${import.meta.env.VITE_API_URL}${attachmentUrl}`;
             } else {
-                fullUrl = `http://localhost:5002/uploads/${attachmentUrl}`;
+                fullUrl = `${import.meta.env.VITE_API_URL}/uploads/${attachmentUrl}`;
             }
         }
         

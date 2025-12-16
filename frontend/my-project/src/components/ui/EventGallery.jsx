@@ -11,8 +11,10 @@ const EventGallery = () => {
     const fetchEvents = async () => {
       try {
         const data = await eventService.getAll();
+        // Ensure data is an array before sorting
+        const eventsArray = Array.isArray(data) ? data : [];
         // Sort by date descending and take top 3
-        const sortedEvents = data.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+        const sortedEvents = eventsArray.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
         setEvents(sortedEvents.slice(0, 3));
       } catch (error) {
         console.error('Failed to fetch events:', error);
@@ -62,7 +64,7 @@ const EventGallery = () => {
               <div className="relative h-56 overflow-hidden">
                 <div className="absolute inset-0 bg-gray-100" />
                 <img 
-                  src={event.thumbnailUrl?.startsWith('http') ? event.thumbnailUrl : `http://localhost:5002/uploads/${event.thumbnailUrl}`}
+                  src={event.thumbnailUrl?.startsWith('http') ? event.thumbnailUrl : `${import.meta.env.VITE_API_URL}/uploads/${event.thumbnailUrl}`}
                   alt={event.title}
                   className="relative z-10 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   onError={(e) => {

@@ -17,7 +17,7 @@ const Notices = () => {
     const fetchNotices = async () => {
       try {
         const data = await noticeService.getAll();
-        setAllNotices(data);
+        setAllNotices(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Failed to fetch notices:', error);
       } finally {
@@ -47,9 +47,9 @@ const Notices = () => {
     if (!attachmentUrl.startsWith('http')) {
         // If it starts with /, just prepend base URL, otherwise prepend /uploads/
         if (attachmentUrl.startsWith('/')) {
-            fullUrl = `http://localhost:5002${attachmentUrl}`;
+            fullUrl = `${import.meta.env.VITE_API_URL}${attachmentUrl}`;
         } else {
-            fullUrl = `http://localhost:5002/uploads/${attachmentUrl}`;
+            fullUrl = `${import.meta.env.VITE_API_URL}/uploads/${attachmentUrl}`;
         }
     }
 
