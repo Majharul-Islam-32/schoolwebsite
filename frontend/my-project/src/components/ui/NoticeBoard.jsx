@@ -108,13 +108,12 @@ const NoticeBoard = () => {
                                 <th className="py-3 px-6 font-bold w-1/2">Topic</th>
                                 <th className="py-3 px-6 font-bold">Date</th>
                                 <th className="py-3 px-6 font-bold text-center">View</th>
-                                <th className="py-3 px-6 font-bold text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody className="text-gray-600 text-sm font-light">
                             {loading ? (
                                 <tr>
-                                    <td colSpan="5" className="py-8 text-center">
+                                    <td colSpan="4" className="py-8 text-center">
                                         <div className="flex justify-center items-center">
                                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                                         </div>
@@ -135,26 +134,12 @@ const NoticeBoard = () => {
                                         <td className="py-4 px-6 text-center">
                                             <button 
                                                 onClick={() => openPreview(notice)}
-                                                className="text-blue-500 hover:text-blue-700 transform hover:scale-110 transition-transform flex flex-col items-center"
+                                                className="text-blue-500 hover:text-blue-700 transform hover:scale-110 transition-transform flex flex-col items-center mx-auto"
                                                 title="View Notice"
                                             >
                                                 <Eye size={20} />
                                                 <span className="text-[10px] mt-1">View</span>
                                             </button>
-                                        </td>
-                                        <td className="py-4 px-6 text-center">
-                                            {notice.attachmentUrl ? (
-                                                <button 
-                                                    onClick={() => openPreview(notice)}
-                                                    className="text-green-500 hover:text-green-700 font-medium flex items-center justify-center gap-1 transform hover:scale-105 transition-transform"
-                                                    title="View Attachment"
-                                                >
-                                                    <span className="hidden sm:inline">View</span>
-                                                    <Eye size={16} />
-                                                </button>
-                                            ) : (
-                                                <span className="text-gray-400 text-xs italic">No File</span>
-                                            )}
                                         </td>
                                     </tr>
                                 ))
