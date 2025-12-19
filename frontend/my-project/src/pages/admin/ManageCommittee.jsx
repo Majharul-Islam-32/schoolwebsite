@@ -3,7 +3,7 @@ import {
   Users, Plus, Search, Edit2, Trash2, Upload, X, Loader2, Phone, Mail 
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../../../services/api';
+import api from '../../services/api';
 
 const ManageCommittee = () => {
   const [members, setMembers] = useState([]);
