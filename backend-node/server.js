@@ -14,7 +14,14 @@ BigInt.prototype.toJSON = function () { return this.toString() }
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://abdullapurbazargps.netlify.app', 'https://leafy-klepon-bfce06.netlify.app', 'https://preeminent-sunflower-b3afb1.netlify.app'],
+  origin: [
+    'http://localhost:5173',
+    'https://abdullapurbazargps.netlify.app',
+    'https://leafy-klepon-bfce06.netlify.app',
+    'https://preeminent-sunflower-b3afb1.netlify.app',
+    'https://abdullapurbazargps.vercel.app',
+    'https://schoolwebsite-bice.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
