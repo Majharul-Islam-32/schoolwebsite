@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -109,19 +109,7 @@ const Hero = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Buttons */}
-      <button 
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all z-30"
-      >
-        <ChevronLeft size={32} />
-      </button>
-      <button 
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all z-30"
-      >
-        <ChevronRight size={32} />
-      </button>
+
 
       {/* Dots */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
