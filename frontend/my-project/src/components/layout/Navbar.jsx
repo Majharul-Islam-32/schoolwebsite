@@ -371,6 +371,7 @@ const Navbar = () => {
             </div>
             <div className="block">
               <h1 className="text-xl font-bold leading-tight">Abdullapur Bazar GPS</h1>
+              <p className="text-xs text-blue-200">Austagram, Kishoreganj</p>
               <p className="text-xs text-blue-200">Est. 1977</p>
             </div>
           </Link>
