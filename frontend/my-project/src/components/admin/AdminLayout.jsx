@@ -18,7 +18,7 @@ const AdminLayout = () => {
       {isMobileMenuOpen && (
         <>
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           <div className="fixed left-0 top-0 z-50 lg:hidden h-screen">
