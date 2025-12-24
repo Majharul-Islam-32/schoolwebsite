@@ -19,7 +19,7 @@ const NoticeBoard = () => {
         const data = await noticeService.getAll();
         // Take top 4 for a balanced grid layout
         const noticesArray = Array.isArray(data) ? data : [];
-        const latestNotices = noticesArray.slice(0, 4);
+        const latestNotices = noticesArray.slice(0, 6);
         setNotices(latestNotices);
       } catch (error) {
         console.error('Failed to fetch notices:', error);
