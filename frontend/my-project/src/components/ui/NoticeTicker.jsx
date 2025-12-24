@@ -40,9 +40,9 @@ const NoticeTicker = () => {
   // Map scroll speed to duration
   const getDuration = () => {
     switch (settings.scrollSpeed) {
-      case 'SLOW': return 30;
-      case 'FAST': return 15;
-      default: return 20; // MEDIUM
+      case 'SLOW': return 25;
+      case 'FAST': return 10;
+      default: return 15; // MEDIUM
     }
   };
 
