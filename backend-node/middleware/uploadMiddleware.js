@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, path.join(__dirname, '../uploads/'));
   },
   filename(req, file, cb) {
     cb(
@@ -14,19 +14,24 @@ const storage = multer.diskStorage({
 });
 
 function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png|pdf/;
+  // Allowed extensions
+  const filetypes = /jpg|jpeg|png|pdf|mp4|webm|ogg|mov|avi|mkv|wmv/;
+  // Allowed mimetypes (video/.* covers all video types)
+  const mimetypes = /image\/.*|application\/pdf|video\/.*|application\/octet-stream/;
+
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = filetypes.test(file.mimetype);
+  const mimetype = mimetypes.test(file.mimetype);
 
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb('Images and PDFs only!');
+    cb(new Error('Unsupported file type! Allowed: Images, PDFs, Videos'));
   }
 }
 
 const upload = multer({
   storage,
+  limits: { fileSize: 100 * 1024 * 1024 }, // 100MB limit
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
