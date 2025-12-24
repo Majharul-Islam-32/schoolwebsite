@@ -28,7 +28,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`bg-slate-800 text-white h-screen fixed left-0 top-0 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} flex flex-col`}>
+    <div className={`bg-slate-800 text-white h-full transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} flex flex-col`}>
       {/* Logo */}
       <div className="p-4 border-b border-slate-700 flex items-center justify-between">
         {!isCollapsed && <h1 className="text-xl font-bold">{t('adminPanel')}</h1>}

@@ -10,7 +10,7 @@ const AdminLayout = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar - Desktop */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block fixed left-0 top-0 h-screen z-30">
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       </div>
 
@@ -21,7 +21,7 @@ const AdminLayout = () => {
             className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="fixed left-0 top-0 z-50 lg:hidden">
+          <div className="fixed left-0 top-0 z-50 lg:hidden h-screen">
             <Sidebar isCollapsed={false} setIsCollapsed={() => setIsMobileMenuOpen(false)} />
           </div>
         </>
