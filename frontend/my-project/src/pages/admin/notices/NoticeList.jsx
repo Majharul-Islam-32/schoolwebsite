@@ -160,7 +160,7 @@ const NoticeList = () => {
                       <Eye size={18} />
                     </Link>
                     <Link
-                      to={`/admin/notices/edit/${notice.id}`}
+                      to={`/secure-panel/notices/edit/${notice.id}`}
                       className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Edit"
                     >

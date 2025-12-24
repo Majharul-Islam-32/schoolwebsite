@@ -55,7 +55,7 @@ const NoticeCreate = () => {
       {/* Header */}
       <div className="flex items-center mb-6">
         <button
-          onClick={() => navigate('/admin/notices')}
+          onClick={() => navigate('/secure-panel/notices')}
           className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <ArrowLeft size={24} />
@@ -169,7 +169,7 @@ const NoticeCreate = () => {
           <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
             <button
               type="button"
-              onClick={() => navigate('/admin/notices')}
+              onClick={() => navigate('/secure-panel/notices')}
               className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel
