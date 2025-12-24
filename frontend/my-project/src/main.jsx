@@ -5,10 +5,15 @@ import App from './App.jsx'
 
 import { HelmetProvider } from 'react-helmet-async';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <Provider store={store}>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </Provider>
   </StrictMode>,
 )

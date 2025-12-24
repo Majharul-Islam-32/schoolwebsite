@@ -3,27 +3,21 @@ import { getFileUrl } from '../utils/apiUtils';
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight, Image as ImageIcon } from 'lucide-react';
 import FadeInSection from '../components/ui/FadeInSection';
-import { eventService } from '../services/eventService';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEvents } from '../store/slices/eventSlice';
 
 const Gallery = () => {
-  const [events, setEvents] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const dispatch = useDispatch();
+  const { items: events, loading } = useSelector((state) => state.events);
 
   React.useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await eventService.getAll();
-        setEvents(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Failed to load events', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
+    // Only fetch if we don't have events loaded
+    if (events.length === 0) {
+      dispatch(fetchEvents());
+    }
+  }, [dispatch, events.length]);
 
-  if (loading) {
+  if (loading && events.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-gray-600">Loading events...</p>
