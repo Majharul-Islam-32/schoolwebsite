@@ -7,27 +7,22 @@ import PdfPreviewModal from '../components/ui/PdfPreviewModal';
 import { noticeService } from '../services/noticeService';
 import SEO from '../components/common/SEO';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNotices } from '../store/slices/noticeSlice';
+
 const Notices = () => {
   const [filter, setFilter] = useState('all');
-  const [allNotices, setAllNotices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { items: allNotices, loading } = useSelector((state) => state.notices);
   const [previewFile, setPreviewFile] = useState(null);
   const [previewType, setPreviewType] = useState(null); // 'image' or 'pdf'
   const [previewTitle, setPreviewTitle] = useState('');
 
   React.useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const data = await noticeService.getAll();
-        setAllNotices(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error('Failed to fetch notices:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchNotices();
-  }, []);
+    if (allNotices.length === 0) {
+      dispatch(fetchNotices());
+    }
+  }, [dispatch, allNotices.length]);
 
   const filteredNotices = filter === 'all' 
     ? allNotices 
