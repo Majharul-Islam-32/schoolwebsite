@@ -180,11 +180,83 @@ const updateTickerSettings = async (req, res) => {
   }
 };
 
+// @desc    Get notice by ID
+// @route   GET /api/notices/:id
+// @access  Public
+const getNoticeById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const notice = await prisma.notices.findUnique({
+      where: { id: BigInt(id) },
+    });
+
+    if (notice) {
+      res.json({
+        ...notice,
+        id: notice.id.toString(),
+        publishDate: notice.publish_date,
+        attachmentUrl: notice.attachment_url,
+        isUrgent: notice.is_urgent,
+        showInTicker: notice.show_in_ticker,
+        createdAt: notice.created_at,
+        updatedAt: notice.updated_at,
+        createdBy: notice.created_by ? notice.created_by.toString() : null
+      });
+    } else {
+      res.status(404).json({ message: 'Notice not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// @desc    Update a notice
+// @route   PUT /api/notices/:id
+// @access  Private/Admin
+const updateNotice = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, category, publishDate, isUrgent, attachmentUrl, showInTicker } = req.body;
+
+  try {
+    const notice = await prisma.notices.update({
+      where: { id: BigInt(id) },
+      data: {
+        title,
+        description,
+        category,
+        publish_date: new Date(publishDate),
+        is_urgent: isUrgent || false,
+        attachment_url: attachmentUrl,
+        show_in_ticker: showInTicker || false,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({
+      ...notice,
+      id: notice.id.toString(),
+      publishDate: notice.publish_date,
+      attachmentUrl: notice.attachment_url,
+      isUrgent: notice.is_urgent,
+      showInTicker: notice.show_in_ticker,
+      createdAt: notice.created_at,
+      updatedAt: notice.updated_at,
+      createdBy: notice.created_by ? notice.created_by.toString() : null
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 module.exports = {
   getNotices,
   createNotice,
   deleteNotice,
   getTickerNotices,
   getTickerSettings,
-  updateTickerSettings
+  updateTickerSettings,
+  getNoticeById,
+  updateNotice
 };
