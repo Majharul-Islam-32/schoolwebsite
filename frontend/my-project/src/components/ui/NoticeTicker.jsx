@@ -56,13 +56,15 @@ const NoticeTicker = () => {
         
         <div className="flex-grow overflow-hidden relative h-6">
           <motion.div 
-            className="whitespace-nowrap absolute"
+            className="whitespace-nowrap absolute flex items-center"
             animate={{ x: ["100%", "-100%"] }}
             transition={{ repeat: Infinity, duration: getDuration(), ease: "linear" }}
           >
             {notices.map((notice, index) => (
-              <span key={notice.id || index} className="mr-12 text-sm md:text-base">
-                {notice.title} •
+              <span key={notice.id || index} className="mr-8 text-sm md:text-base flex items-center">
+                <span className="mx-2 text-[10px] text-gray-400">●</span>
+                {notice.title}
+                <span className="mx-2 text-[10px] text-gray-400">●</span>
               </span>
             ))}
           </motion.div>
