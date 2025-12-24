@@ -24,7 +24,7 @@ const Navbar = () => {
   };
   
   const handleHomeClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   const navItems = [
@@ -364,7 +364,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and School Name */}
-          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 mr-6 -ml-4">
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 mr-6 -ml-4" onClick={handleHomeClick}>
             <div className="h-18 w-18 rounded-full overflow-hidden">
               <img src="/logo.png" alt="Logo" className="h-full w-full object-cover scale-110" />
             </div>
@@ -390,7 +390,7 @@ const Navbar = () => {
                   <Link 
                     to={item.path}
                     className="flex items-center space-x-1 cursor-pointer hover:text-blue-200 transition-colors py-2 whitespace-nowrap"
-                    onClick={item.name === 'Home' ? handleHomeClick : undefined}
+                    onClick={item.path === '/' ? handleHomeClick : undefined}
                   >
                     <span className="font-medium text-lg">{item.name}</span>
                   </Link>
@@ -453,7 +453,7 @@ const Navbar = () => {
         </div>
         
         <div className="overflow-y-auto h-full pb-20">
-          {navItems.map((item, index) => (
+          {navItems.filter(item => item.path !== '/').map((item, index) => (
             <div key={index}>
               {item.dropdown ? (
                 <div 
