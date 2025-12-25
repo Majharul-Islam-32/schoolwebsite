@@ -100,7 +100,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-blue-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-300">
+        <div className="border-t border-blue-800 pt-8 mt-8 flex flex-col md:flex-row justify-center items-center text-sm text-blue-300">
           <p>&copy; {new Date().getFullYear()} Abdullapur Bazar Government Primary School. All rights reserved.</p>
         </div>
       </div>
