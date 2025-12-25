@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-blue-900 text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           
           {/* Column 1: School Info */}
           <div>
@@ -53,6 +53,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/routine" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
+                  <ArrowRight size={14} className="mr-2" /> Class Routine
+                </Link>
+              </li>
+              <li>
                 <Link to="/gallery" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
                   <ArrowRight size={14} className="mr-2" /> Photo Gallery
                 </Link>
@@ -70,51 +75,24 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Academic */}
-          <div>
-            <h4 className="text-lg font-bold mb-6 border-b border-blue-700 pb-2 inline-block">Academic</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/routine" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
-                  <ArrowRight size={14} className="mr-2" /> Class Routine
-                </Link>
-              </li>
-              <li>
-                <Link to="/syllabus" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
-                  <ArrowRight size={14} className="mr-2" /> Syllabus
-                </Link>
-              </li>
-              <li>
-                <Link to="/result" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
-                  <ArrowRight size={14} className="mr-2" /> Exam Results
-                </Link>
-              </li>
-              <li>
-                <Link to="/admission" className="text-blue-200 hover:text-white hover:pl-2 transition-all flex items-center">
-                  <ArrowRight size={14} className="mr-2" /> Admission Info
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Contact Info */}
+          {/* Column 3: Contact Info */}
           <div>
             <h4 className="text-lg font-bold mb-6 border-b border-blue-700 pb-2 inline-block">Contact Info</h4>
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin size={20} className="mr-3 text-blue-400 flex-shrink-0 mt-1" />
                 <span className="text-blue-200 text-sm">
-                  Village Name, Post Office,<br />
-                  Upazila Name, District - 1234
+                  Abdullapur, Austagram<br />
+                  Kishoreganj
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone size={20} className="mr-3 text-blue-400 flex-shrink-0" />
-                <span className="text-blue-200 text-sm">01711-XXXXXX</span>
+                <span className="text-blue-200 text-sm">01716849460</span>
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-3 text-blue-400 flex-shrink-0" />
-                <span className="text-blue-200 text-sm">info@abgps.edu.bd</span>
+                <span className="text-blue-200 text-sm">rafiqulht77@gmail.com</span>
               </li>
             </ul>
           </div>
