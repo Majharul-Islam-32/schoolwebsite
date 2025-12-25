@@ -12,7 +12,7 @@ const HeadmasterMessage = () => {
             <div className="relative">
               <div className="absolute inset-0 rounded-lg transform translate-x-3 translate-y-3"></div>
               <img 
-                src="/headmaster.png" 
+                src="/teacher1.png" 
                 alt="Headmaster" 
                 className="relative rounded-lg shadow-xl w-64 md:w-80 h-auto object-cover border-4 border-white"
               />
