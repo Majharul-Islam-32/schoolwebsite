@@ -6,29 +6,28 @@ import NoticeTicker from './NoticeTicker';
 import { noticeService } from '../../services/noticeService';
 import PdfPreviewModal from './PdfPreviewModal';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNotices } from '../../store/slices/noticeSlice';
+import SkeletonLoader from '../common/SkeletonLoader';
+
 const NoticeBoard = () => {
-  const [notices, setNotices] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const dispatch = useDispatch();
+  const { items: notices, loading } = useSelector((state) => state.notices);
   const [previewFile, setPreviewFile] = useState(null);
   const [previewType, setPreviewType] = useState(null); // 'image' or 'pdf'
   const [previewTitle, setPreviewTitle] = useState('');
 
+  // Derived state for latest notices
+  const latestNotices = React.useMemo(() => {
+    return Array.isArray(notices) ? notices.slice(0, 6) : [];
+  }, [notices]);
+
   React.useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const data = await noticeService.getAll();
-        // Take top 4 for a balanced grid layout
-        const noticesArray = Array.isArray(data) ? data : [];
-        const latestNotices = noticesArray.slice(0, 6);
-        setNotices(latestNotices);
-      } catch (error) {
-        console.error('Failed to fetch notices:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchNotices();
-  }, []);
+    // Fetch if no notices loaded yet
+    if (notices.length === 0) {
+      dispatch(fetchNotices());
+    }
+  }, [dispatch, notices.length]);
 
   const openPreview = (notice) => {
     if (!notice.attachmentUrl) {
@@ -111,16 +110,10 @@ const NoticeBoard = () => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-600 text-sm font-light">
-                            {loading ? (
-                                <tr>
-                                    <td colSpan="4" className="py-8 text-center">
-                                        <div className="flex justify-center items-center">
-                                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                                        </div>
-                                    </td>
-                                </tr>
+                            {loading && latestNotices.length === 0 ? (
+                                <SkeletonLoader type="table-row" count={5} />
                             ) : (
-                                notices.map((notice, index) => (
+                                latestNotices.map((notice, index) => (
                                     <tr key={notice.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
                                         <td className="py-3 md:py-4 px-3 md:px-6 font-medium whitespace-nowrap hidden md:table-cell">{index + 1}</td>
                                         <td className="py-3 md:py-4 px-3 md:px-6">

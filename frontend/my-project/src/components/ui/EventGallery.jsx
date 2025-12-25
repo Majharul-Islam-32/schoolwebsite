@@ -4,37 +4,45 @@ import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight, MapPin, Image as ImageIcon } from 'lucide-react';
 import { eventService } from '../../services/eventService';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEvents } from '../../store/slices/eventSlice';
+import SkeletonLoader from '../common/SkeletonLoader';
+
 const EventGallery = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { items: events, loading } = useSelector((state) => state.events);
+
+  // Derived state for latest events
+  const latestEvents = React.useMemo(() => {
+    const eventsArray = Array.isArray(events) ? [...events] : [];
+    return eventsArray.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate)).slice(0, 3);
+  }, [events]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await eventService.getAll();
-        // Ensure data is an array before sorting
-        const eventsArray = Array.isArray(data) ? data : [];
-        // Sort by date descending and take top 3
-        const sortedEvents = eventsArray.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
-        setEvents(sortedEvents.slice(0, 3));
-      } catch (error) {
-        console.error('Failed to fetch events:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
+    if (events.length === 0) {
+      dispatch(fetchEvents());
+    }
+  }, [dispatch, events.length]);
 
-  if (loading) {
+  if (loading && latestEvents.length === 0) {
     return (
-      <div className="py-12 flex justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
-      </div>
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-10">
+            <div>
+              <SkeletonLoader type="text" className="w-64 h-8 mb-2" />
+              <SkeletonLoader type="text" className="w-48 h-4" />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <SkeletonLoader type="card" count={3} />
+          </div>
+        </div>
+      </section>
     );
   }
 
-  if (events.length === 0) return null;
+  if (latestEvents.length === 0) return null;
 
   return (
     <section className="py-16 bg-white">
@@ -55,7 +63,7 @@ const EventGallery = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event, index) => (
+          {latestEvents.map((event, index) => (
             <Link 
               to={`/gallery/${event.id}`} 
               key={event.id}
@@ -75,6 +83,7 @@ const EventGallery = () => {
                       e.target.src = fallback;
                     }
                   }}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
                 
