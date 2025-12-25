@@ -31,8 +31,8 @@ const SchoolFeatures = () => {
     {
       id: 1,
       label: "Total Students",
-      value: 400,
-      suffix: "+",
+      value: 329,
+      suffix: "",
       icon: Users
     },
     {
@@ -43,17 +43,10 @@ const SchoolFeatures = () => {
       icon: BookOpen
     },
     {
-      id: 3,
-      label: "Awards Won",
-      value: 28,
-      suffix: "",
-      icon: Trophy
-    },
-    {
       id: 4,
       label: "Years of Excellence",
       value: 48,
-      suffix: "+",
+      suffix: "",
       icon: Star
     }
   ];
@@ -119,7 +112,7 @@ const SchoolFeatures = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stats.map((stat) => (
             <StatCard 
               key={stat.id}
