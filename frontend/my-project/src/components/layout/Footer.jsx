@@ -24,7 +24,7 @@ const Footer = () => {
               Est. 1977. We are dedicated to providing quality primary education to nurture the future leaders of our nation. Our focus is on holistic development and moral values.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/profile.php?id=100015057793581" className="bg-blue-800 p-2 rounded-full hover:bg-blue-600 transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=100063690812490&mibextid=ZbWKwL" className="bg-blue-800 p-2 rounded-full hover:bg-blue-600 transition-colors">
                 <Facebook size={18} />
               </a>
               <a href="https://www.youtube.com/channel/UCN9UZVVYZxvgp8iUJ-aAayg" className="bg-blue-800 p-2 rounded-full hover:bg-blue-600 transition-colors">

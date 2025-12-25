@@ -7,7 +7,7 @@ const QuickStats = () => {
     {
       id: 1,
       label: "Total Students",
-      value: 400,
+      value: 329,
       icon: <Users size={40} />,
       color: "bg-blue-100 text-blue-600"
     },
@@ -51,7 +51,7 @@ const QuickStats = () => {
               </div>
               <h3 className="text-4xl font-bold mb-2">
                 <CountUp end={stat.value} duration={2.5} enableScrollSpy />
-                {stat.label.includes("Years") || stat.label.includes("Students") || stat.label.includes("Achievers") ? "+" : ""}
+                {stat.label.includes("Years") || stat.label.includes("Students") || stat.label.includes("Achievers") ? "" : ""}
               </h3>
               <p className="text-blue-100 font-medium text-lg">{stat.label}</p>
             </div>

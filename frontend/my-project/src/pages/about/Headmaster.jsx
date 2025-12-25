@@ -44,7 +44,7 @@ const Headmaster = () => {
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-blue-600 mb-3">Experience</h3>
             <p className="text-gray-600 leading-relaxed">
-              MD.Rafiqul Islam has over 20 years of experience in primary education. He started his career as an Assistant Teacher in 2005 and was promoted to Head Teacher in 2015. He has received multiple awards for his contribution to increasing student enrollment and reducing dropout rates in rural areas.
+              Mohammad Rafiqul Islam has over 20 years of experience in primary education. He started his career as an Assistant Teacher in 2005 and was promoted to Head Teacher in 2015. He has received multiple awards for his contribution to increasing student enrollment and reducing dropout rates in rural areas.
             </p>
           </div>
 

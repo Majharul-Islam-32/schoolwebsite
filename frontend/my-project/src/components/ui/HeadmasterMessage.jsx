@@ -44,7 +44,7 @@ const HeadmasterMessage = () => {
             </div>
 
             <div className="mt-8">
-              <h4 className="text-xl font-bold text-gray-800">Md. Rafiqul Islam</h4>
+              <h4 className="text-xl font-bold text-gray-800">Mohammad Rafiqul Islam</h4>
               <p className="text-blue-600 font-medium">Head Teacher</p>
             </div>
           </div>

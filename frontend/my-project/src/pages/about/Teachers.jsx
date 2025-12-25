@@ -6,7 +6,7 @@ import SEO from '../../components/common/SEO';
 const Teachers = () => {
   // Hardcoded teacher data as requested
   const teachers = [
-    { id: 1, name: "রফিকুল ইসলাম", designation: "Head Teacher", phone: "01716849460", imageUrl: "/teacher1.png" },
+    { id: 1, name: "মোহাম্মদ রফিকুল ইসলাম", designation: "Head Teacher", phone: "01716849460", imageUrl: "/teacher1.png" },
     { id: 2, name: "রায়হান আহম্মেদ", designation: "Assistant Teacher", phone: "01912225377", imageUrl: "/teacher2.png" },
     { id: 3, name: "সফিকুল ইসলাম", designation: "Assistant Teacher", phone: "01710196063", imageUrl: "/teacher3.png" },
     { id: 4, name: "মোস্তফা কামাল", designation: "Assistant Teacher", phone: "01622210023", imageUrl: "/teacher4.png" },

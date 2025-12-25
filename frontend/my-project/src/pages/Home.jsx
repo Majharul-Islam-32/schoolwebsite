@@ -21,11 +21,11 @@ const Home = () => {
         <NoticeBoard />
       </FadeInSection>
       <EventGallery />
-      <FadeInSection>
-        <SchoolFeatures />
-      </FadeInSection>
       <FadeInSection delay={0.2}>
         <HeadmasterMessage />
+      </FadeInSection>
+      <FadeInSection>
+        <SchoolFeatures />
       </FadeInSection>
       <Achievements />
     </div>
